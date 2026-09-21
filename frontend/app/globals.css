@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis drives smooth scroll */
+}
+
+body {
+  background: #080513;
+  color: #f3effc;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+@layer components {
+  .glass {
+    @apply relative overflow-hidden rounded-[22px] bg-white/[0.06] border border-white/[0.08] backdrop-blur-xl;
+  }
+  .glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: linear-gradient(140deg, rgba(255,255,255,.45), rgba(255,255,255,0) 42%, rgba(255,255,255,.14));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/[0.14] bg-white/[0.1] px-6 py-3 font-medium backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_38px_-14px_rgba(201,182,255,.7)];
+  }
+  .btn-primary {
+    @apply border-none bg-iris font-semibold text-[#1b1229];
+  }
+  .btn-solid {
+    @apply border-white/20 bg-gradient-to-b from-[#5c27d6] to-[#3d1594];
+  }
+  .eyebrow {
+    @apply mb-3 flex items-center gap-3 text-[.72rem] font-semibold uppercase tracking-[.3em] text-ink-faint;
+  }
+  .eyebrow::after {
+    content: "";
+    flex: 1;
+    max-width: 90px;
+    height: 1px;
+    background: rgba(255,255,255,.14);
+  }
+  .iris-text {
+    @apply bg-iris bg-clip-text text-transparent;
+  }
+  .chip {
+    @apply inline-block rounded-full border border-white/[0.14] px-3 py-1 text-[.7rem] uppercase tracking-[.09em] text-ink-dim;
+  }
+  .chip-live {
+    @apply border-mint/50 text-mint;
+  }
+  .field label {
+    @apply mb-1.5 block text-[.83rem] text-ink-dim;
+  }
+  .field input, .field select, .field textarea {
+    @apply w-full rounded-[13px] border border-white/[0.08] bg-white/[0.06] px-4 py-3 transition-colors focus:border-lilac focus:bg-white/[0.1] focus:outline-none;
+  }
+  .field select option {
+    background: #1b1130;
+  }
+}
+
+.marquee-track {
+  display: flex;
+  gap: 2.6rem;
+  width: max-content;
+  animation: slide 34s linear infinite;
+}
+@keyframes slide { to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
