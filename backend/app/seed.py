@@ -6,8 +6,17 @@ from .routers.events import unique_slug
 
 
 def run(db: Session):
-    if db.query(models.AdminUser).count() > 0:
-        return  # already seeded
+    has_seed_data = (
+        db.query(models.AdminUser).first() is not None
+        or db.query(models.Member).first() is not None
+        or db.query(models.Event).first() is not None
+        or db.query(models.GalleryItem).first() is not None
+        or db.query(models.Achievement).first() is not None
+        or db.query(models.Project).first() is not None
+        or db.query(models.Notice).first() is not None
+    )
+    if has_seed_data:
+        return  # database already contains app data; avoid duplicate demo records
 
     # --- admin account ---
     db.add(models.AdminUser(
